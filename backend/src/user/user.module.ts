@@ -1,20 +1,11 @@
 import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserController } from './user.controller';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([User]),
-    JwtModule.registerAsync({
-      useFactory: () => ({
-        secret: process.env.JWT_SECRET,
-        signOptions: { expiresIn: '1d' },
-      }),
-    }),
-  ],
+  imports: [TypeOrmModule.forFeature([User])],
   providers: [UserService],
   controllers: [UserController],
 })

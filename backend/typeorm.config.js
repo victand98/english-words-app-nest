@@ -1,16 +1,14 @@
 module.exports = {
   type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'postgres',
-  password: '',
-  database: 'english-words-app',
-  synchronize: true,
-  logging: true,
+  host: process.env.POSTGRES_HOST || 'localhost',
+  port: process.env.POSTGRES_PORT || 5432,
+  username: process.env.POSTGRES_USER || 'postgres',
+  password: process.env.POSTGRES_PASSWORD || '',
+  database: process.env.POSTGRES_DB || 'english-words-app',
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrationsTableName: 'migrations',
-  migrations: ['dist/database/migrations/*.js'],
+  migrations: ['dist/migrations/*.js'],
   cli: {
-    migrationsDir: 'src/database/migrations',
+    migrationsDir: 'src/migrations',
   },
 };
