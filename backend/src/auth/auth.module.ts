@@ -13,7 +13,6 @@ import { LocalStrategy } from './local.auth';
 
 @Module({
   imports: [
-    ConfigModule,
     UserModule,
     PassportModule,
     JwtModule.registerAsync({

@@ -8,6 +8,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { plainToClass } from 'class-transformer';
+import { validate } from 'class-validator';
 import { RegisterDto } from './user.dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';
@@ -18,11 +20,14 @@ export class UserController {
 
   @Post('register')
   async register(@Body() registerDto: RegisterDto): Promise<User> {
-    const userExists = await this.userService.findByEmail(registerDto.email);
+    const user = plainToClass(RegisterDto, registerDto);
+    const errors = await validate(user);
+    if (errors.length) throw new BadRequestException(errors);
+
+    const userExists = await this.userService.findByEmail(user.email);
     if (userExists) throw new BadRequestException('User already exists');
 
-    const user = await this.userService.create(registerDto);
-    return user;
+    return this.userService.create(registerDto);
   }
 
   @Get('profile')

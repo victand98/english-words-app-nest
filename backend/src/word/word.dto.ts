@@ -1,12 +1,15 @@
-import { IsNotEmpty, IsString, IsOptional, IsUrl } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
 
 export class CreateWordDto {
   @IsNotEmpty()
   @IsString()
+  @Transform(({ value }) => value.trim())
   text: string;
 
   @IsNotEmpty()
   @IsString()
+  @Transform(({ value }) => value.trim())
   meaning: string;
 
   @IsOptional()
@@ -21,10 +24,12 @@ export class CreateWordDto {
 export class UpdateWordDto {
   @IsOptional()
   @IsString()
+  @Transform(({ value }) => value.trim())
   text?: string;
 
   @IsOptional()
   @IsString()
+  @Transform(({ value }) => value.trim())
   meaning?: string;
 
   @IsOptional()

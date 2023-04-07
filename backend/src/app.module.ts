@@ -19,7 +19,12 @@ import { WordModule } from './word/word.module';
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
-        entities: [],
+        entities: ['dist/**/*.entity{.ts,.js}'],
+        migrationsTableName: 'migrations',
+        migrations: ['dist/migrations/*.js'],
+        cli: {
+          migrationsDir: 'src/migrations',
+        },
         synchronize: true,
       }),
       inject: [ConfigService],
